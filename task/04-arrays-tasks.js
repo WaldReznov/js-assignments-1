@@ -23,7 +23,12 @@
  *    [0, 1, 2, 3, 4, 5], 5    => 5
  */
 function findElement(arr, value) {
-   throw new Error('Not implemented');
+   for(let i = 0; i < arr.length; i++) {
+      if(arr[i] == value) {
+         return i;
+      }
+   }
+   return -1;
 }
 
 /**
@@ -38,9 +43,26 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-   throw new Error('Not implemented');
+   let mass = [];
+   function count(i) {
+      if(i != 0) {
+         mass.unshift(i*2-1);
+         return count(i-1);
+      }
+      return mass;
+   }
+   return count(len);
 }
 
+// function generateOdds(len) {
+// 	console.log(len);
+//    if(len != 0) {
+//       mass.unshift(len*2-1);
+//       return generateOdds(len-1);
+//    }
+//    return mass;
+// 	console.log(mass);
+// }
 
 /**
  * Returns the doubled array - elements of the specified array are repeated twice using original order
@@ -54,7 +76,9 @@ function generateOdds(len) {
  *    [] => [] 
  */
 function doubleArray(arr) {
-   throw new Error('Not implemented');
+   let mass = [];
+   mass = [...arr,...arr];
+   return mass;
 }
 
 
@@ -70,7 +94,7 @@ function doubleArray(arr) {
  *    [] => [] 
  */
 function getArrayOfPositives(arr) {
-   throw new Error('Not implemented');
+   return arr.filter(num => num > 0);
 }
 
 /**
@@ -85,7 +109,7 @@ function getArrayOfPositives(arr) {
  *    [ 'cat, 'dog', 'raccon' ] => [ 'cat', 'dog', 'racoon' ]
  */
 function getArrayOfStrings(arr) {
-   throw new Error('Not implemented');
+   return arr.filter(num => typeof num == "string");
 }
 
 /**
@@ -102,7 +126,11 @@ function getArrayOfStrings(arr) {
  *    [ false, 0, NaN, '', undefined ]   => [ ]
  */
 function removeFalsyValues(arr) {
-   throw new Error('Not implemented');
+   return arr.filter(function (num){
+       if(num != false || num != null || num != 0 || num != "" || num != undefined || num != NaN){
+         return num;
+       }
+   })
 }
 
 /**
@@ -116,7 +144,10 @@ function removeFalsyValues(arr) {
  *    [ 'a', 'b', 'c', 'd', 'e', 'f', 'g' ]  => [ 'A', 'B', 'C', 'D', 'E', 'F', 'G' ]
  */
 function getUpperCaseStrings(arr) {
-   throw new Error('Not implemented');
+   arr = arr.join('%%');
+   arr = arr.toUpperCase();
+   arr = arr.split('%%');;
+   return arr;
 }
 
 
@@ -131,7 +162,9 @@ function getUpperCaseStrings(arr) {
  *    [ 'angular', 'react', 'ember' ] => [ 7, 5, 5 ]
  */
 function getStringsLength(arr) {
-   throw new Error('Not implemented');
+   return arr.filter(function (item){
+      return item.length;
+  })
 }
 
 /**
@@ -146,8 +179,9 @@ function getStringsLength(arr) {
  *    [ 1, 'b', 'c'], 0, 'x'  => [ 'x', 1, 'b', 'c' ]
  */
 function insertItem(arr, item, index) {
-   throw new Error('Not implemented');
-}
+   arr.splice(index, 0, item);
+   return arr;
+ }
 
 /**
  * Returns the n first items of the specified array
@@ -160,7 +194,8 @@ function insertItem(arr, item, index) {
  *    [ 'a', 'b', 'c', 'd'], 3  => [ 'a', 'b', 'c' ]
  */
 function getHead(arr, n) {
-   throw new Error('Not implemented');
+   arr.splice(n);
+	return arr;
 }
 
 
@@ -175,7 +210,7 @@ function getHead(arr, n) {
  *    [ 'a', 'b', 'c', 'd'], 3  => [ 'b', 'c', 'd' ]
  */
 function getTail(arr, n) {
-   throw new Error('Not implemented');
+   return arr.splice(arr.length - n,arr.length);
 }
 
 
