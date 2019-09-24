@@ -226,28 +226,28 @@ function getRectangleString(width, height) {
  */
 function encodeToRot13(str) {
     
-    let mass1 = 'nopqrstuvwxyzabcdefghijklm'.split('');
-    let mass2 = 'abcdefghijklmnopqrstuvwxyz'.split('');
     let str1 = 'nopqrstuvwxyzabcdefghijklm';
     let str2 = 'abcdefghijklmnopqrstuvwxyz';
-    let strToArray = str.split('');
     let newArray = [];
     for(let i = 0; i < str.length; i++) {
         let upperCase = Boolean(false);
-        let digital;
+        let digital = '';
         if(str[i] == str[i].toUpperCase()) {
             upperCase = Boolean(true);
             digital = str[i].toLowerCase();
         } else {
             digital = str[i];
         }
-        if(upperCase) {
-            newArray.push(str1.charAt(str2.indexOf(digital)).toUpperCase);
+		if(str2.indexOf(digital) == -1) {
+            newArray.push(digital);
         } else {
-            newArray.push(str1.charAt(str2.indexOf(digital)));   
+            if(upperCase == true) {
+                newArray.push(str1.charAt(str2.indexOf(digital)).toUpperCase());
+            } else {
+                newArray.push(str1.charAt(str2.indexOf(digital)));   
+            }
         }
     }
-    
     return newArray.join('');
 }
 
@@ -266,6 +266,7 @@ function encodeToRot13(str) {
  */
 function isString(value) {
     if(typeof value == "string") return true;
+    else if(value == null) return false;
     else if(typeof value == "object" && value.__proto__ == String.prototype) return true;
     return false;
 }
