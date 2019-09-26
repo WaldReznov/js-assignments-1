@@ -23,12 +23,7 @@
  *    [0, 1, 2, 3, 4, 5], 5    => 5
  */
 function findElement(arr, value) {
-   for(let i = 0; i < arr.length; i++) {
-      if(arr[i] == value) {
-         return i;
-      }
-   }
-   return -1;
+   return arr.indexOf(value);
 }
 
 /**
@@ -43,7 +38,7 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-   let mass = [];
+   /*let mass = [];
    function count(i) {
       if(i != 0) {
          mass.unshift(i*2-1);
@@ -52,6 +47,17 @@ function generateOdds(len) {
       return mass;
    }
    return count(len);
+
+   let count = -2;
+   let arr = [...Array(len)];
+   arr.fill(1);
+   return arr.map(function(x) {
+		count += 2;
+      return x+=count;
+   });*/
+
+   return [...Array(len)].fill(1).map((x,i) => x = x + i*2);
+
 }
 
 // function generateOdds(len) {
@@ -271,13 +277,9 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-   return arr.map(
-      function (x) {
-         return x.reduce(function(a,b) {
-            return a + b;
-         })
-      }
-   )
+   var newArray = [];
+   arr.reduce(function(a,b,i) { return newArray[i] = a+b; },0);
+	return newArray;
 }
 
 /**
@@ -324,12 +326,16 @@ function getSecondItems(arr) {
 function propagateItemsByPositionIndex(arr) {
    let count = 0;
    let newArr = [];
-   let mass = [];
+   let result = [];
 
-   arr.map(function(num) {
-      mass.push(num);
+   arr.map(function(num,i,a) {
+     count++;
+     return newArr[count-1]=([...Array(count)].fill(arr[i]));
    });
-   
+   console.log(newArr);
+   result = [].concat(...newArr);
+
+   return result;
 }
 
 
@@ -392,9 +398,17 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
-   let newArr = ['zero','one','two','three','four','five','six','seven','eight','nine'];
+   let arrStrings = ['zero','one','two','three','four','five','six','seven','eight','nine'];
+   let index = [];
+   let sortArr = [];
 
-   throw new Error('Not implemented');
+   arr.map((x) => index.push(arrStrings.indexOf(x)));
+
+   index = index.sort();
+
+   index.map((x) => sortArr.push(arrStrings[x]));
+
+   return sortArr;
 }
 
 /** 
@@ -410,9 +424,12 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
 function getItemsSum(arr) {
-   return arr.reduce(function(a,b){
-      return a+b;
-   })
+   if(arr.length != 0) {
+      return arr.reduce(function(a,b) {
+         return a+b;
+      })
+   }
+   return 0;
 }
  
 /** 
@@ -497,7 +514,16 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
-   throw new Error('Not implemented');
+   arr = arr.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+   return arr.sort(function(a,b){
+      if(a.country == b.country) {
+         if(a.city > b.city){
+            return 1;
+         } else {
+            return -1;
+         }
+      }
+   });
 }
 
 /**
@@ -542,7 +568,15 @@ function getIdentityMatrix(n) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-   throw new Error('Not implemented');
+   let size = end - start + 1;
+   let count = -1;
+   size = size >= 0 ? size : size * -1;
+   let arr = [...Array(size)];
+   arr.fill(start);
+   return arr.map(function(x) {
+		count++;
+      return x+=count;
+   });
 }
 
 /**
@@ -557,7 +591,8 @@ function getIntervalArray(start, end) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(arr) {
-   throw new Error('Not implemented');
+   let set = new Set(arr);
+   return [...set];
 }
 
 /**
@@ -607,7 +642,13 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-    throw new Error('Not implemented');
+   if(childrenSelector == undefined) {
+      arr = arr.join('>><<');
+      return arr.split('>><<');
+   } else {
+      arr = arr.join('');
+      return arr.childrenSelector;
+   }
 }
 
 
