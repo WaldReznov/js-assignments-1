@@ -324,18 +324,12 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-   let count = 0;
    let newArr = [];
    let result = [];
-
-   arr.map(function(num,i,a) {
-     count++;
-     return newArr[count-1]=([...Array(count)].fill(arr[i]));
+   arr.map(function(num,i) {
+     return newArr[i]=([...Array(i+1)].fill(arr[i]));
    });
-   console.log(newArr);
-   result = [].concat(...newArr);
-
-   return result;
+   return [].concat(...newArr);
 }
 
 
@@ -399,16 +393,9 @@ function getPositivesCount(arr) {
  */
 function sortDigitNamesByNumericOrder(arr) {
    let arrStrings = ['zero','one','two','three','four','five','six','seven','eight','nine'];
-   let index = [];
-   let sortArr = [];
-
-   arr.map((x) => index.push(arrStrings.indexOf(x)));
-
+   let index = arr.map((x) => arrStrings.indexOf(x));
    index = index.sort();
-
-   index.map((x) => sortArr.push(arrStrings[x]));
-
-   return sortArr;
+   return index.map((x) => arrStrings[x]);
 }
 
 /** 
@@ -514,7 +501,8 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
-   arr = arr.sort((a,b) => (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0));
+   arr = arr.sort((a,b) => (a.country > b.country) ? 1 
+                           : ((b.country > a.country) ? -1 : 0));
    return arr.sort(function(a,b){
       if(a.country == b.country) {
          if(a.city > b.city){
@@ -626,7 +614,7 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-   throw new Error('Not implemented');
+   return null;
 }
 
 
@@ -688,7 +676,12 @@ function getElementByIndexes(arr, indexes) {
  * 
  */
 function swapHeadAndTail(arr) {
-    throw new Error('Not implemented');
+   let arr1 = arr.slice(0,Math.floor(arr.length/2));
+   let arr2 = arr.slice(Math.ceil(arr.length/2));
+   let newArr = [];
+   newArr = arr2.concat(arr1);
+   newArr.splice(Math.floor(arr.length/2),0,Math.ceil(arr.length/2));
+   return newArr;
 }
 
 

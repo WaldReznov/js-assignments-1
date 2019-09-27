@@ -130,7 +130,14 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    if (rect1.left > (rect2.left+rect2.width) || rect2.left > (rect1.left+rect1.width)) { 
+        return false; 
+    } 
+    // If one rectangle is above other
+    if ((rect1.top+rect1.height)<rect2.top || (rect2.top+rect2.height) < (rect2.top)) { 
+        return false; 
+    } 
+	return true;
 }
 
 
@@ -161,7 +168,13 @@ function doRectanglesOverlap(rect1, rect2) {
  *   
  */
 function isInsideCircle(circle, point) {
-    throw new Error('Not implemented');
+    let distSq = (circle.center.x - point.x) * (circle.center.x - point.x) + (circle.center.y - point.y) * (circle.center.y - point.y);
+    if(distSq < circle.radius * circle.radius){
+      return true;
+    }
+    else {
+      return false;
+    }
 }
 
 
@@ -270,7 +283,21 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
+    ccn = String(ccn).split('');
+    let sum = 0;
+    for(let i = 0; i < ccn.length; i++) {
+        let digital = +ccn[i];
+        if(i % 2 == 0){
+            digital *= +ccn[i];
+            if(digital > 9) {
+                digital -= 9;
+            }
+        }
+        sum += digital;
+    }
+
+    return sum % 10 === 0;
+
 }
 
 
@@ -289,8 +316,8 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    let mass = String(num).split('').reduce((a,b) => a+b);
-    return mass > 9 ? String(mass).split('').reduce((a,b) => a+b) : mass;
+    let mass = String(num).split('').reduce((a,b) => Number(a) + Number(b));
+    return mass > 9 ? String(mass).split('').reduce((a,b) => Number(a) + Number(b)) : mass;
 }
 
 
@@ -316,7 +343,24 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    let arr = str.split('');
+    for(let i = 0; i < str.length; i++) {
+        let count = 0;
+        while (count<arr.length) {
+           if(arr[count]=='<'&&arr[count+1]=='>'||arr[count]=='{'&&arr[count+1]=='}'||arr[count]=='('&&arr[count+1]==')'||arr[count]=='['&&arr[count+1]==']'){
+              arr.splice(count, 1);
+              arr.splice(count, 1);
+              count+=arr.length;
+            }
+            count++;
+          }
+    }
+    if(arr.length == 0){
+        return true;
+      }
+    else{
+        return false;
+    }
 }
 
 
@@ -352,10 +396,35 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    let seconds = (endDate - startDate) / 1000;
+    if(seconds<=45)return 'a few seconds ago';
+    else if(45 < seconds && seconds <= 90) return 'a minute ago';
+    else if(90 < seconds && seconds <= 2700) return -Math.round(-seconds / 60) + ' minutes ago';
+    else if(2700 < seconds && seconds <= 5400) return 'an hour ago';
+    else if(5400 < seconds && seconds <= 79200) return -Math.round(-seconds / 3600) + ' hours ago';
+    else if(79200 < seconds && seconds <= 129600) return 'a day ago';
+    else if(129600 < seconds && seconds <= 2160000) return -Math.round(-seconds / 86400) + ' days ago';
+    else if(2160000 < seconds && seconds <= 3888000) return 'a month ago';
+    else if(3888000 < seconds && seconds <= 29808000) return -Math.round(-seconds / 2592000) + ' months ago';
+    else if(29808000 < seconds && seconds <= 47088000) return 'a year ago';
+    else return -Math.round(-seconds / 31536000) + ' years ago';
 }
 
 
+// function timespanToHumanString(startDate, endDate) {
+//     let seconds = (endDate - startDate) / 1000;
+//     if(seconds<=45)return 'a few seconds ago';
+//     else if(45 < seconds && seconds <= 90) return 'a minute ago';
+//     else if(90 < seconds && seconds <= 2700) return (Math.floor(seconds / 60)).toFixed(1) + ' minutes ago';
+//     else if(2700 < seconds && seconds <= 5400) return 'an hour ago';
+//     else if(5400 < seconds && seconds <= 79200) return (Math.floor(seconds / 3600)).toFixed(1) + ' hours ago';
+//     else if(79200 < seconds && seconds <= 129600) return 'a day ago';
+//     else if(129600 < seconds && seconds <= 2160000) return (Math.floor(seconds / 86400)).toFixed(1) + ' days ago';
+//     else if(2160000 < seconds && seconds <= 3888000) return 'a month ago';
+//     else if(3888000 < seconds && seconds <= 29808000) return (Math.floor(seconds / 2592000)).toFixed(1) + ' months ago';
+//     else if(29808000 < seconds && seconds <= 47088000) return 'a year ago';
+//     else return (Math.floor(seconds / 31536000).toFixed(1)) + ' years ago';
+// }
 /**
  * Returns the string with n-ary (binary, ternary, etc, where n<=10) representation of specified number.
  * See more about
@@ -376,7 +445,16 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    let str = '';
+    for(let i = 0; i < 1025; i++) {
+        if(num < n){
+            str += num % n;
+            return str.split('').reverse().join('');
+        } else {
+            str += num % n;
+        }
+        num = Math.floor(num/n);
+    }
 }
 
 
@@ -416,7 +494,14 @@ function getCommonDirectoryPath(pathes) {
  *
  */
 function getMatrixProduct(m1, m2) {
-    throw new Error('Not implemented');
+    let arr = [];
+    for(let i = 0; i < m1.length; i++){
+        let num = 0;
+        for(let j = 0; j < m2.length; j++){
+            num+= (m1[j][i]);
+        }
+        arr.push(arr)
+    }
 }
 
 
@@ -451,7 +536,18 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+
+    if(position[0][0] != undefined && position[0][0] == position[0][1] && position[0][0] == position[0][2]) return position[0][1];
+    else if(position[0][0] != undefined && position[0][0] == position[1][1] && position[1][1] == position[2][2]) return position[0][0];
+    else if(position[0][2] != undefined && position[0][2] == position[1][1] && position[1][1] == position[2][0]) return position[0][2];
+    else if(position[1][0] != undefined && position[1][0] == position[1][1] && position[1][1] == position[1][2]) return position[1][0];
+    else if(position[0][0] != undefined && position[0][0] == position[1][0] && position[1][0] == position[2][0]) return position[0][0];
+    else if(position[0][1] != undefined && position[0][1] == position[1][1] && position[1][1] == position[2][1]) return position[0][1];
+    else if(position[0][2] != undefined && position[0][2] == position[1][2] && position[1][2] == position[2][2]) return position[0][2];
+    else if(position[2][0] != undefined && position[2][0] == position[2][1] && position[2][1] == position[2][2]) return position[2][0];
+     
+    return undefined; 
+
 }
 
 
